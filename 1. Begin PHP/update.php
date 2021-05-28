@@ -78,17 +78,10 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</head>
- 
-<body>
-    <div class="container">
-     
+<?php 
+  require_once 'header.php';
+  get_header("Update");
+?>
                 <div class="span10 offset1">
                     <div class="row">
                         <div class="alert alert-success" role="alert">
@@ -133,7 +126,6 @@
                     </form>
                 </div>
                  
-    </div> <!-- /container -->
-  </body>
-</html>
-        
+<?php
+    require_once 'footer.php';
+    get_footer();    

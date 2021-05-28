@@ -51,26 +51,19 @@
     }
 ?>
  
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <title>Create</title>
-</head>
- 
-<body>
-<div class="container">
-     
-     <div class="span10 offset1">
+<?php 
+  require_once 'header.php';
+  get_header("Create");
+?>
+    
+    <div class="span10 offset1">
         <div class="row">
             <div class="alert alert-success" role="alert">
                 <h3>Create a Customer</h3>
             </div>
         </div>
-  
-         <form class="form-horizontal" action="create.php" method="post">
+
+        <form class="form-horizontal" action="create.php" method="post">
             <div class="form-group col-md-6">
                 <label for="inputName">Name:</label>
                 <input type="text" class="form-control" name="name" id="inputName" value=<?php echo !empty($name)?$name:'';?>>
@@ -102,13 +95,12 @@
                     <span class="help-inline"><?php echo $mobileError;?></span>
                 <?php endif; ?>
             </div>  
-           <div class="form-actions">
-               <button type="submit" class="btn btn-success">Create</button>
-               <a class="btn btn-info" href="index.php">Back</a>
-             </div>
-         </form>
-     </div>
-      
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">Create</button>
+                <a class="btn btn-info" href="index.php">Back</a>
+                </div>
+        </form>
     </div>
-  </body>
-</html>
+<?php
+    require_once 'footer.php';
+    get_footer();
