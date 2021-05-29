@@ -1,17 +1,5 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <title>List customers</title>
-</head>
- 
-<body>
-    <div class="container"> -->
-<?php 
+<?php
   require_once 'header.php';
-  get_header("List users");
 ?>
   <div class="alert alert-success" role="alert">
     <div class="row">
@@ -30,7 +18,7 @@
         $stmt->close();
 
         // Pagination.
-        if ($_GET['page'] != null && is_numeric($_GET['page'])) {
+        if (isset($_GET['page']) && is_numeric($_GET['page'])) {
           $page = htmlspecialchars($_GET['page']);
         }
         else{
@@ -40,7 +28,7 @@
         $calc_page = ($page - 1) * $num_results_on_page;
       ?>
 
-      <h3>Count <span class="badge badge-secondary"><?php echo $countOrder ?></span></h3>
+      <h3>Count <span class="badge bg-secondary"><?php echo $countOrder ?></span></h3>
     </div>
   </div>
   <div class="row">
@@ -87,7 +75,7 @@
     </table>
   </div>
 
-  <?php if (ceil($countOrder / $num_results_on_page) > 0): ?>
+<?php if (ceil($countOrder / $num_results_on_page) > 0): ?>
     <ul class="pagination">
       <?php if ($page > 1): ?>
         <li class="page-item">
@@ -108,7 +96,7 @@
           </a>
         </li>
       <?php endif; ?>
-      
+
       <?php if ($page-1 > 0): ?>
         <li class="page-item">
           <a class="page-link" href="index.php?page=<?php echo $page-1 ?>"><?php echo $page-1 ?></a>
@@ -147,6 +135,7 @@
           <a class="page-link" href="index.php?page=<?php echo $page+1 ?>">Next</a></li>
       <?php endif; ?>
     </ul>
-  <?php endif;
-  require_once 'footer.php';
-  get_footer();
+<?php endif;
+
+require_once 'footer.php';
+

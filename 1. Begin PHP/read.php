@@ -22,7 +22,6 @@
  
 <?php 
   require_once 'header.php';
-  get_header("Read");
 ?>
     <div class="span10 offset1">
         <div class="row">
@@ -53,5 +52,4 @@
         </form>              
     </div>              
 <?php
-    require_once 'footer.php';
-    get_footer();
+require_once 'footer.php';

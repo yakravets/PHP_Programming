@@ -1,10 +1,10 @@
 <?php
 class Database
 {
-    private static $dbName = '' ;
-    private static $dbHost = '' ;
-    private static $dbUsername = '';
-    private static $dbUserPassword = '';
+    private static $dbName = 'php_crud' ;
+    private static $dbHost = 'localhost' ;
+    private static $dbUsername = 'root';
+    private static $dbUserPassword = '12345678';
      
     private static $cont  = null;
      
@@ -14,7 +14,6 @@ class Database
      
     public static function connect()
     {
-       // One connection through whole application
        if ( null == self::$cont )
        {     
         try
@@ -38,4 +37,3 @@ class Database
       self::$cont = null;
     }
 }
-?>
