@@ -79,7 +79,7 @@
     </div>
 
     <form class="form-horizontal" action="update.php?id=<?php echo $id?>" method="post">
-        <div class="form-group col-md-6">
+        <div class="form-group col-12">
             <label for="inputName">Name:</label>
             <input type="text"
                    class="<?php echo (($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['nameError'])) || !empty($name))?"form-control is-valid":"form-control is-invalid" ?>"
@@ -96,7 +96,7 @@
                 </div>
             <?php } endif; ?>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-12">
             <label for="inputName">Last name:</label>
             <input type="text"
                    class="<?php echo (($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['last_nameError'])) || !empty($last_name))?"form-control is-valid":"form-control is-invalid" ?>"
@@ -113,7 +113,7 @@
                 </div>
             <?php } endif; ?>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-12">
             <label for="inputEmail">Email:</label>
             <input type="text"
                    class="<?php echo (($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['emailError'])) || !empty($email))?"form-control is-valid":"form-control is-invalid" ?>"
@@ -131,7 +131,7 @@
             <?php } endif; ?>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-12">
             <label for="inputMobilePhone">Mobile number:</label>
             <input type="text"
                    class="<?php echo (($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['mobileError'])) || !empty($mobile))?"form-control is-valid":"form-control is-invalid" ?>"
@@ -148,7 +148,7 @@
                 </div>
             <?php } endif; ?>
         </div>
-      <div class="form-actions">
+      <div class="buttons">
           <button type="submit" class="btn btn-success">Update</button>
           <a class="btn btn-info" href="/">Back</a>
         </div>

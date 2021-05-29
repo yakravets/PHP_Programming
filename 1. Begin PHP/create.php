@@ -27,12 +27,20 @@
             $errors['mobileError'] = 'Please enter Mobile Number';
         }
 
+        if(count($errors) == 0 && $_FILES['profile_photo']['name'] != ''){
+            require_once 'random.php';
+            $new_name = uuid() . '.' . explode('/', $_FILES['profile_photo']['type'])[1];
+            if(!move_uploaded_file($_FILES['profile_photo']['tmp_name'], 'img/' . $new_name)){
+                $new_name = null;
+            }
+        }
+
         // insert data
         if (count($errors) == 0) {
             $pdo = Database::connect();
-            $sql = "INSERT INTO customers (name, last_name, email, mobile) values(?, ?, ?, ?)";
+            $sql = "INSERT INTO customers (name, last_name, email, mobile, image_url) values(?, ?, ?, ?, ?)";
             $stmt = new mysqli_stmt($pdo, $sql);       
-            $stmt->bind_param('ssss', $name, $last_name, $email, $mobile);
+            $stmt->bind_param('sssss', $name, $last_name, $email, $mobile, $new_name);
             $stmt->execute();
             $stmt->close();
             Database::disconnect();
@@ -52,8 +60,8 @@
         </div>
     </div>
 
-    <form class="form-horizontal" method="POST">
-        <div class="form-group col-md-6">
+    <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+        <div class="form-group col-12">
             <label for="inputName" class="form-label">Name:</label>
             <input type="text" class="<?php echo ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['nameError']))?"form-control is-valid":"form-control is-invalid" ?>" name="name" id="inputName" value="<?php echo !empty($name)?$name:'';?>" aria-describedby="inputNameFeedback">
             <?php if (isset($errors['nameError'])): ?>
@@ -67,7 +75,7 @@
             <?php } endif; ?>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-12">
             <label for="inputName" class="form-label">Last name:</label>
             <input type="text" class="<?php echo ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['last_nameError']))?"form-control is-valid":"form-control is-invalid" ?>" name="last_name" id="inputLastName" value="<?php echo !empty($last_name)?$last_name:'';?>" aria-describedby="inputLastNameFeedback">
             <?php if (isset($errors['last_nameError'])): ?>
@@ -81,7 +89,7 @@
             <?php } endif; ?>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-12">
             <label for="inputEmail" class="form-label">Email:</label>
             <input type="text"
                    class="<?php echo ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['emailError']))?"form-control is-valid":"form-control is-invalid" ?>"
@@ -97,7 +105,7 @@
             <?php } endif; ?>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-12">
             <label for="inputMobilePhone" class="form-label">Mobile number:</label>
             <input type="text" class="<?php echo ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($errors['mobileError']))?"form-control is-valid":"form-control is-invalid" ?>" name="mobile" id="inputMobilePhone" value="<?php echo !empty($mobile)?$mobile:'';?>" aria-describedby="inputMobilePhoneFeedback">
             <?php if (isset($errors['mobileError'])): ?>
@@ -111,7 +119,13 @@
             <?php } endif; ?>
         </div>
 
-        <div class="form-actions">
+        <div class="form-group col-12">
+            <label for="" class="form-label">User photo:</label>
+            <input type="file" id="inputFile" class="form-control" aria-label="file example" name="profile_photo">
+            <div class="invalid-feedback">Example invalid form file feedback</div>
+        </div>
+
+        <div class="buttons">
             <button type="submit" class="btn btn-success">Create</button>
             <a class="btn btn-info" href="/">Back</a>
         </div>

@@ -1,6 +1,7 @@
 <?php
   require_once 'header.php';
 ?>
+<div class="span10 offset1">
   <div class="alert alert-success" role="alert">
     <div class="row">
       <h3>PHP CRUD Grid</h3>
@@ -31,42 +32,47 @@
       <h3>Count <span class="badge bg-secondary"><?php echo $countOrder ?></span></h3>
     </div>
   </div>
-  <div class="row">
-    <p>
-      <a href="create.php" class="btn btn-success">Create</a>
-    </p>
+  <div>
+    <div class="buttons">
+      <a href="create.php" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create</a>
+    </div>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
+          <th>Img</th>
           <th>Name</th>
           <th>Last name</th>
           <th>Email Address</th>
           <th>Mobile Number</th>
-          <th>Action</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <?php
           $pdo = Database::connect();
-          $sql = 'SELECT id, name, last_name, email, mobile FROM customers ORDER BY id ASC LIMIT ?,?';
+          $sql = 'SELECT id, name, last_name, email, mobile, image_url FROM customers ORDER BY id ASC LIMIT ?, ?';
           $stmt = new mysqli_stmt($pdo, $sql);       
           $stmt->bind_param('ii', $calc_page, $num_results_on_page);
           $stmt->execute();
           $data = $stmt->get_result(); 
           foreach ($data as $row) {
-                    echo '<tr>';
-                    echo '<td>'. $row['name'] . '</td>';
-                    echo '<td>'. $row['last_name'] . '</td>';
-                    echo '<td>'. $row['email'] . '</td>';
-                    echo '<td>'. $row['mobile'] . '</td>';
-                    echo '<td width=250>';
-                    echo '<a class="btn btn-info" href="read.php?id='.$row['id'].'">Read</a>';
-                    echo ' ';
-                    echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
-                    echo ' ';
-                    echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
-                    echo '</td>';
-                    echo '</tr>';
+            echo '<tr>';
+            echo "<td width=105><div class='profile_photo'>";
+            $picture = !is_null($row['image_url'])?$row['image_url']:"empty.jpg";
+            echo "<img src='img/$picture' class='img-thumbnail profile_photo'>";
+            echo "</div></td>";
+            echo '<td>' . $row['name'] . '</td>';
+            echo '<td>' . $row['last_name'] . '</td>';
+            echo '<td>' . $row['email'] . '</td>';
+            echo '<td>' . $row['mobile'] . '</td>';
+            echo '<td width=250>';
+            echo '<a class="btn btn-success" href="read.php?id='.$row['id'].'"><i class="bi bi-eye"></i></a>';
+            echo ' ';
+            echo '<a class="btn btn-warning" href="update.php?id='.$row['id'].'"><i class="bi bi-pencil-square"></i></a>';
+            echo ' ';
+            echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'"><i class="bi bi-trash-fill"></i></a>';
+            echo '</td>';
+            echo '</tr>';
           }
           $stmt->close();
           Database::disconnect();
@@ -135,7 +141,8 @@
           <a class="page-link" href="index.php?page=<?php echo $page+1 ?>">Next</a></li>
       <?php endif; ?>
     </ul>
-<?php endif;
+</div>
 
+<?php endif;
 require_once 'footer.php';
 

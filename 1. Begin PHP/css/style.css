@@ -1,0 +1,10 @@
+.buttons{
+    padding: .5rem;
+}
+
+.profile_photo{
+    width: 100px;
+}
+img.profile_photo{
+    border-radius: 50%;
+}

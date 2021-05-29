@@ -9,3 +9,7 @@ CREATE TABLE  `customers` (
 `email` VARCHAR( 100 ) NOT NULL ,
 `mobile` VARCHAR( 100 ) NOT NULL
 ) ENGINE = INNODB;
+
+ALTER TABLE `customers`
+ADD `image_uuid` varchar(36) NULL
+AFTER `mobile`;
