@@ -18,3 +18,14 @@
             }, false)
         })
 })();
+
+function onchangephoto() {
+
+    let photo_for_cropp = document.querySelector('#photo_for_cropp');
+    photo_for_cropp.src = document.querySelector('#inputFile').value[0];
+
+    let modal = new bootstrap.Modal(document.getElementById('modal'), {
+        keyboard: false
+    });
+    modal.show();
+}

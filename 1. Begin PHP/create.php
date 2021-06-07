@@ -120,9 +120,36 @@
         </div>
 
         <div class="form-group col-12">
-            <label for="" class="form-label">User photo:</label>
-            <input type="file" id="inputFile" class="form-control" aria-label="file example" name="profile_photo">
+            <label for="user_photo d-block" class="form-label">User photo:</label>
+            <button id="user_photo" class="btn btn-primary"><i class="bi bi-paperclip"></i> Attach photo</button>
+            <input type="file" id="inputFile" class="form-control d-none" aria-label="file example" name="profile_photo" onchange="onchangephoto()">
             <div class="invalid-feedback">Example invalid form file feedback</div>
+        </div>
+
+        <div class="modal" id="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                        <div class="row">
+                            <div class="col-8">
+                                <img src="" class="card-img" id="photo_for_cropp">
+                            </div>
+                            <div class="col-4">
+                                4
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="buttons">
@@ -131,6 +158,6 @@
         </div>
     </form>
 </div>
-
+<script src="js/add.js"></script>
 <?php
 require_once 'footer.php';

@@ -7,7 +7,7 @@
       <h3>PHP CRUD Grid</h3>
     </div>
     <hr>
-    <div class="row">
+    <div class="container d-flex">
       <?php 
         include 'database.php';
         $pdo = Database::connect();
@@ -15,7 +15,7 @@
         $stmt = new mysqli_stmt($pdo, $sql);       
         $stmt->execute();
         $data = $stmt->get_result()->fetch_assoc(); 
-        $countOrder = $data['count'];
+        $count_rows = $data['count'];
         $stmt->close();
 
         // Pagination.
@@ -28,8 +28,13 @@
         $num_results_on_page = 5;
         $calc_page = ($page - 1) * $num_results_on_page;
       ?>
-
-      <h3>Count <span class="badge bg-secondary"><?php echo $countOrder ?></span></h3>
+        <h3 class="col-8">
+            Count <span class="badge bg-secondary"><?php echo $count_rows ?></span>
+        </h3>
+        <form class="d-flex col-4">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search_line">
+            <button class="btn btn-outline-success" type="submit" id="btn_search"><i class="bi bi-search"></i></button>
+        </form>
     </div>
   </div>
   <div>
@@ -81,7 +86,7 @@
     </table>
   </div>
 
-<?php if (ceil($countOrder / $num_results_on_page) > 0): ?>
+<?php if (ceil($count_rows / $num_results_on_page) > 0): ?>
     <ul class="pagination">
       <?php if ($page > 1): ?>
         <li class="page-item">
@@ -113,14 +118,14 @@
         <a class="page-link" href="index.php?page=<?php echo $page ?>"><?php echo $page ?></a>
       </li>
 
-      <?php if ($page+1 < ceil($countOrder / $num_results_on_page)+1): ?>
+      <?php if ($page+1 < ceil($count_rows / $num_results_on_page)+1): ?>
         <li class="page-item">
           <a class="page-link" href="index.php?page=<?php echo $page+1 ?>">
             <?php echo $page+1 ?>
           </a>
         </li>
         <?php endif; ?>
-      <?php if ($page+2 < ceil($countOrder / $num_results_on_page)+1): ?>
+      <?php if ($page+2 < ceil($count_rows / $num_results_on_page)+1): ?>
         <li class="page-item">
           <a class="page-link" href="index.php?page=<?php echo $page+2 ?>">
             <?php echo $page+2 ?>
@@ -128,20 +133,21 @@
         </li>
       <?php endif; ?>
 
-      <?php if ($page < ceil($countOrder / $num_results_on_page)-2): ?>
+      <?php if ($page < ceil($count_rows / $num_results_on_page)-2): ?>
         <li class="page-item">
-          <a class="page-link" href="index.php?page=<?php echo ceil($countOrder / $num_results_on_page) ?>">
-          <?php echo ceil($countOrder / $num_results_on_page) ?>
+          <a class="page-link" href="index.php?page=<?php echo ceil($count_rows / $num_results_on_page) ?>">
+          <?php echo ceil($count_rows / $num_results_on_page) ?>
         </a>
         </li>
       <?php endif; ?>
 
-      <?php if ($page < ceil($countOrder / $num_results_on_page)): ?>
+      <?php if ($page < ceil($count_rows / $num_results_on_page)): ?>
         <li class="page-item">
           <a class="page-link" href="index.php?page=<?php echo $page+1 ?>">Next</a></li>
       <?php endif; ?>
     </ul>
 </div>
+<script src="js/search.js"></script>
 
 <?php endif;
 require_once 'footer.php';
