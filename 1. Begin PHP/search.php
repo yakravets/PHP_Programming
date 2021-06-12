@@ -87,7 +87,9 @@
             $stmt->close();
             Database::disconnect();
 
-            if (ceil($count_rows / $num_results_on_page) > 0): ?>
+            $countPages = ceil($count_rows / $num_results_on_page);
+            $delimiter = min($countPages, 10);
+            if ($countPages > 0): ?>
                 <ul class="pagination">
                     <?php if ($page > 1): ?>
                         <li class="page-item">
@@ -95,61 +97,39 @@
                         </li>
                     <?php endif; ?>
 
-                    <?php if ($page > 3): ?>
-                        <li class="page-item">
+                    <?php if ($countPages >= 1): ?>
+                        <li class="page-item <?php if($page == 1) echo "active"; ?>">
                             <a class="page-link" href="search.php?page=1&q=<?php echo $q ?>">1</a>
                         </li>
                     <?php endif; ?>
 
-                    <?php if ($page-2 > 0): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="search.php?page=<?php echo $page-2 ?>&q=<?php echo $q ?>">
-                                <?php echo $page-2 ?>
-                            </a>
+                    <?php for($i = 2; $i <= $delimiter; $i++): ?>
+                        <li class="page-item <?php if($i == $page) echo "active"; ?>">
+                            <a class="page-link" href="search.php?page=<?php echo $i ?>&q=<?php echo $q ?>"><?php echo $i ?></a>
                         </li>
-                    <?php endif; ?>
+                    <?php endfor; ?>
 
-                    <?php if ($page-1 > 0): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="search.php?page=<?php echo $page-1 ?>&q=<?php echo $q ?>"><?php echo $page-1 ?></a>
+                    <?php if($countPages > $delimiter): ?>
+
+                        <li class="page-item <?php if($i == $page) echo "active"; ?>">
+                            <a class="page-link" href="search.php?page=<?php echo $delimiter + 1 ?>&q=<?php echo $q ?>">...</a>
                         </li>
-                    <?php endif; ?>
 
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="search.php?page=<?php echo $page ?>&q=<?php echo $q ?>"><?php echo $page ?></a>
-                    </li>
+                    <?php endif;?>
 
-                    <?php if ($page+1 < ceil($count_rows / $num_results_on_page)+1): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="search.php?page=<?php echo $page+1 ?>&q=<?php echo $q ?>">
-                                <?php echo $page+1 ?>
-                            </a>
+                        <li class="page-item <?php if($countPages == $page) echo "active"; ?>">
+                            <a class="page-link" href="search.php?page=<?php echo $countPages ?>&q=<?php echo $q ?>"><?php echo $countPages ?></a>
                         </li>
-                    <?php endif; ?>
-                    <?php if ($page+2 < ceil($count_rows / $num_results_on_page)+1): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="search.php?page=<?php echo $page+2 ?>&q=<?php echo $q ?>">
-                                <?php echo $page+2 ?>
-                            </a>
-                        </li>
-                    <?php endif; ?>
 
-                    <?php if ($page < ceil($count_rows / $num_results_on_page)-2): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="search.php?page=<?php echo ceil($count_rows / $num_results_on_page) ?>&q=<?php echo $q ?>">
-                                <?php echo ceil($count_rows / $num_results_on_page) ?>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-
-                    <?php if ($page < ceil($count_rows / $num_results_on_page)): ?>
+                    <?php if ($page < $countPages): ?>
                         <li class="page-item">
                             <a class="page-link" href="search.php?page=<?php echo $page+1 ?>&q=<?php echo $q ?>">Next</a>
                         </li>
                     <?php endif; ?>
-                        <li class="page-item">
-                            <a class="page-link" href="/">Back</a>
-                        </li>
+
+                    <li class="page-item">
+                        <a class="page-link" href="/">Back to list</a>
+                    </li>
                 </ul>
             <?php endif;
             } else
